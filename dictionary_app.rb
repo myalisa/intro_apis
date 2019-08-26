@@ -1,14 +1,27 @@
 require "http"
 
-response = HTTP.get("https://api.wordnik.com/v4/word.json/cake/definitions?limit=200&includeRelated=false&useCanonical=false&includeTags=false&api_key=9f63510ab680a9a2504370c0a530c846ba454b12337f0c6c0")
+system "clear"
 
-examples = response.parse
+print "Enter a Word:"
+user_input = gets.chomp
 
+response = HTTP.get("https://api.wordnik.com/v4/word.json/#{ user_input }/definitions?limit=10&includeRelated=false&useCanonical=false&includeTags=false&api_key=9f63510ab680a9a2504370c0a530c846ba454b12337f0c6c0")
 
+definitions = response.parse
 
-examples.each do |text|
-  p text
-  puts ""
+puts ""
+puts "Definitions"
+puts "=" * 50
+puts ""
+
+definitions.each do |definition|
+  if definition["text"] != nil
+    puts "     - #{definition["partOfSpeech"]} - #{definition["text"]}"
+  end
 end
+
+
+
+
 
 
